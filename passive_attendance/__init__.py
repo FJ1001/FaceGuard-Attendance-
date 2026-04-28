@@ -1,0 +1,1 @@
+"""Passive classroom attendance package."""

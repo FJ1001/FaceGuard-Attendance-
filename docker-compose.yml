@@ -1,0 +1,15 @@
+# This file defines how to run your complete system
+version: '3.8'
+services:
+  smart-attendance:              # Your main app
+    build: .                     # Build from Dockerfile
+    ports:
+      - "8501:8501"             # Map port 8501
+    volumes:
+      - ./data:/app/data        # Persist database
+      - ./logs:/app/logs        # Persist logs
+    env_file:
+      - .env                    # Load all settings from .env
+    environment:
+      - STREAMLIT_SERVER_PORT=8501
+    restart: unless-stopped      # Auto-restart if crashes
