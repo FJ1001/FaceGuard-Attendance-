@@ -1,66 +1,71 @@
-<div align="center">
-  <h1>👁️ EyeAmHere</h1>
-  <h3>AI-Powered Offline Attendance System</h3>
-  <p><em>"I am here." — said with just a glance.</em></p>
-</div>
+# FaceGuard-Attendance
 
-<br/>
+AI-Powered Offline Attendance System
 
-**EyeAmHere** replaces the traditional 15-minute roll-call ritual with sub-3-second face recognition. It integrates robust fraud prevention, passive liveness detection, and auto-generates AI-written insights about student engagement—all 100% offline. No paid APIs required, and it runs smoothly on any local environment.
+---
+
+**FaceGuard-Attendance** replaces the traditional 15-minute roll-call ritual with sub-3-second face recognition. It integrates robust fraud prevention, passive liveness detection, and auto-generates AI-written insights about student engagement—all 100% offline. No paid APIs required, and it runs smoothly on any local environment.
 
 ---
 
 ## ✨ Features
 
-| Feature | Description |
-|---|---|
-| **👤 Face Attendance** | Mark IN/OUT in under 3 seconds via webcam or photo upload |
-| **🤖 AI Narrative Insights** | Natural-language summaries (e.g., *"3 students at risk. Monday absences 35% above average."*) |
-| **🔒 Liveness Verification** | Passive anti-spoofing using texture, specular, and edge analysis scoring |
-| **⚠️ Proxy Detection** | Multi-face detection reliably blocks fraudulent buddy-marking before it happens |
-| **😷 Mask Detection** | Intelligent heuristic face-covering check with configurable block/warn modes |
-| **🧠 Focus Monitoring** | Real-time engagement scoring from eye detection, centering, blur, and brightness |
-| **📊 Analytics Dashboard** | Beautiful charts covering daily trends, student performance, and predictions |
-| **📄 PDF Reports** | One-click comprehensive attendance report export |
-| **🔐 Secure Auth** | bcrypt passwords, TOTP 2FA for admin, rate-limited resets, and detailed audit logging |
-| **🎬 Demo Mode** | "Load Demo Data" injects testing students + 30 days of realistic attendance history |
+| Feature                  | Description                                                                                 |
+| ------------------------ | ------------------------------------------------------------------------------------------- |
+| 👤 Face Attendance       | Mark IN/OUT in under 3 seconds via webcam or photo upload                                   |
+| 🤖 AI Narrative Insights | Natural-language summaries (e.g., "3 students at risk. Monday absences 35% above average.") |
+| 🔒 Liveness Verification | Passive anti-spoofing using texture, specular, and edge analysis scoring                    |
+| ⚠️ Proxy Detection       | Multi-face detection reliably blocks fraudulent buddy-marking before it happens             |
+| 😷 Mask Detection        | Intelligent heuristic face-covering check with configurable block/warn modes                |
+| 🧠 Focus Monitoring      | Real-time engagement scoring from eye detection, centering, blur, and brightness            |
+| 📊 Analytics Dashboard   | Beautiful charts covering daily trends, student performance, and predictions                |
+| 📄 PDF Reports           | One-click comprehensive attendance report export                                            |
+| 🔐 Secure Auth           | bcrypt passwords, TOTP 2FA for admin, rate-limited resets, and detailed audit logging       |
+| 🎬 Demo Mode             | "Load Demo Data" injects testing students + 30 days of realistic attendance history         |
 
-**Privacy & Offline-First:**
-- No OpenAI / no cloud vision API dependencies
-- No GPU required (CPU-friendly design)
-- Database: Local SQLite with zero setup required
+---
+
+## 🔐 Privacy & Offline-First
+
+* No OpenAI / no cloud vision API dependencies
+* No GPU required (CPU-friendly design)
+* Database: Local SQLite with zero setup required
 
 ---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Python 3.9+
-- Webcam (for active live attendance)
+
+* Python 3.9+
+* Webcam (for active live attendance)
 
 ### 1. Install Dependencies
 
-Clone this repository and install the required modules:
-
 ```bash
 git clone <your-repository-url>
-cd EyeAmHere
+cd FaceGuard-Attendance
 pip install -r requirements.txt
 ```
+
+---
 
 ### 2. Configure Environment Variables
 
 ```bash
 cp .env.example .env
 ```
-Open `.env` and configure your credentials. **Minimum required values:**
 
-```env
-SECRET_KEY=<at least 32 characters of random text>
-SALT=<at least 16 characters of random text>
-ADMIN_EMAIL=admin@yourdomain.com
-ADMIN_PASSWORD=<12+ character strong password>
+Open `.env` and configure:
+
 ```
+SECRET_KEY=<at least 32 characters>
+SALT=<at least 16 characters>
+ADMIN_EMAIL=admin@yourdomain.com
+ADMIN_PASSWORD=<strong password>
+```
+
+---
 
 ### 3. Run the Application
 
@@ -68,58 +73,54 @@ ADMIN_PASSWORD=<12+ character strong password>
 streamlit run main.py
 ```
 
-Open `http://localhost:8501` in your browser. 
-Login with the `ADMIN_EMAIL` and `ADMIN_PASSWORD` you provided in `.env`.
+Open:
+👉 [http://localhost:8501](http://localhost:8501)
 
-> **Tip:** You can click **🎬 Load Demo Data** in the admin sidebar to instantly populate the application with a realistic dataset to test the system.
+Login using your admin credentials.
+
+💡 Tip: Use **🎬 Load Demo Data** for quick testing.
 
 ---
 
 ## 🐳 Docker Deployment
 
-To spin everything up in an isolated container instance, run:
-
 ```bash
-# Build and start
 docker-compose up --build
 ```
-*The `docker-compose.yml` automatically maps to your `.env` variables.*
 
 ---
 
 ## 🏗️ Technical Architecture
 
-```text
-EyeAmHere/
-├── main.py                    # Streamlit entry point
-├── config/settings.py         # Application configuration definitions
-├── auth/                      # Authentication logic + TOTP 2FA
-├── database/                  # SQLite models and logic
+```
+FaceGuard-Attendance/
+├── main.py
+├── config/settings.py
+├── auth/
+├── database/
 ├── face_recognition/
-│   ├── recognition_engine.py  # LBP + HOG + Gabor + DCT algorithms
-│   ├── liveness_detector.py   # Passive anti-spoofing engine
-│   └── image_utils.py         # Multi-face / Proxy detection
-├── face_mask/                 # Mask analysis/detection core
-├── face_focus/                # Real-time engagement scoring
+│   ├── recognition_engine.py
+│   ├── liveness_detector.py
+│   └── image_utils.py
+├── face_mask/
+├── face_focus/
 ├── services/
-│   ├── analytics_service.py   # System analytics & AI Insights
-│   ├── attendance_service.py  
-│   └── student_service.py
-├── scripts/                   # CLI integrations (e.g. seed_demo.py)
-├── ui/pages/                  # Front-end Streamlit views
-└── data/attendance.db         # SQLite data (auto-created securely)
+├── scripts/
+├── ui/pages/
+└── data/attendance.db
 ```
 
-**Face Recognition Stack:**
-- **Detection**: OpenCV Haar Cascade (Fast, CPU-optimized)
-- **Descriptor Module**: Enhanced LBP (256-d) + HOG (9-d) + Gabor filters (36-d) + DCT (320-d) resulting in a single 512-d feature vector.
-- **Matching Methodology**: Cosine similarity algorithm with automated margin constraints.
+---
+
+## 🧠 Face Recognition Stack
+
+* **Detection:** OpenCV Haar Cascade
+* **Descriptor:** LBP + HOG + Gabor + DCT → 512-d vector
+* **Matching:** Cosine similarity with margin constraints
 
 ---
 
 ## 🧪 Testing
-
-The repository uses `pytest` for rigorous unit and integration testing. Run the complete test suite locally:
 
 ```bash
 pytest tests/ -v
@@ -129,14 +130,18 @@ pytest tests/ -v
 
 ## 🔒 Security Practices
 
-- **Zero-knowledge Vectors**: Face embeddings are exclusively stored as float32 mathematical vectors and cannot be reverse-engineered back to original photos.
-- **Protected Credentials**: Passwords natively hashed with bcrypt (cost 12).
-- **Log Verifications**: Embedded audit logging rigorously tracks system logins and biometrics events.
-- **Brute-force Mitigations**: Password resets are strictly rate-limited (Max 5/hour per endpoint).
-- **Spoof Tracking**: Suspected photo spoofing accurately warns the administrator via dashboard.
+* Face data stored as non-reversible vectors
+* bcrypt password hashing
+* Audit logging enabled
+* Rate-limited authentication attempts
+* Spoof detection alerts
 
 ---
 
 ## 📜 License
 
-This project is licensed under the MIT License — feel free to use, study, modify, and deploy.
+MIT License — free to use, modify, and deploy.
+
+---
+
+If you want, I can also **shorten this (for hackathon submission)** or make a **more attractive GitHub README with badges + screenshots** 🚀
