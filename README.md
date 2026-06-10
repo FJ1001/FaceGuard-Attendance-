@@ -142,6 +142,3 @@ pytest tests/ -v
 
 MIT License — free to use, modify, and deploy.
 
----
-
-If you want, I can also **shorten this (for hackathon submission)** or make a **more attractive GitHub README with badges + screenshots** 🚀
